@@ -17,11 +17,15 @@ for (let i = 0; i < utilitiesList.length; i ++) {
 }
 // console.log(utilities);
 
-for (let i = 0; i < NUM_PEOPLE; i ++) {
+while (i < NUM_PEOPLE) {
     let person = names[i];
     let firstName = person.name;
     let lastName = person.surname;
     let email = person.email;
+    // email = email.split("."); // splitting the email by ".", deleting if containing more than 1 "."
+    // if (email.length > 2) {
+    //     continue;
+    // }
     let password = firstName.toLowerCase() + lastName.toLowerCase();
     let address = addresses[i];
     let numBills = Math.floor(Math.random() * MAX_BILLS) + 1;
@@ -63,6 +67,7 @@ for (let i = 0; i < NUM_PEOPLE; i ++) {
         zipcode: ZIPCODE,
         bill: bills
     }
+    i++;
 }
 
 fs.writeFileSync('data.json', JSON.stringify(data));
