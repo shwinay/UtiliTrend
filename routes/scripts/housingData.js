@@ -38,7 +38,7 @@ function getData(address, citystatezip) {
             'zestimate' : parseInt(zestimate),
         };
         
-        console.log(obj);
+        //console.log(obj);
         
         return obj;
     })
