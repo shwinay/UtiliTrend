@@ -12,11 +12,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-<<<<<<< HEAD
-    "node-fetch": "^2.6.0"
-=======
     "node-fetch": "^2.6.0",
     "xml-js": "^1.6.11"
->>>>>>> regex pattern mathcing for xml
   }
 }
