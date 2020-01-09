@@ -22,10 +22,11 @@ while (i < NUM_PEOPLE) {
     let firstName = person.name;
     let lastName = person.surname;
     let email = person.email;
-    email = email.split("."); // eleting if containing more than 1 "."
-    if (email.length > 2) {
+    if (email.split(".").length > 2) { // deleting if containing more than 1 "."
+        console.log(email);
         continue;
     }
+    email = email.split(".")[0] // remove .com
     let password = firstName.toLowerCase() + lastName.toLowerCase();
     let address = addresses[i];
     let numBills = Math.floor(Math.random() * MAX_BILLS) + 1;
