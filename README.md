@@ -12,3 +12,5 @@ checking accounts, with a specific focus on their utilities spending. This takes
 ### Technologies Utilized
 + Zillow API
 + Postman
++ React
++ Firebase
