@@ -23,7 +23,6 @@ while (i < NUM_PEOPLE) {
     let lastName = person.surname;
     let email = person.email;
     if (email.split(".").length > 2) { // deleting if containing more than 1 "."
-        console.log(email);
         continue;
     }
     email = email.split(".")[0] // remove .com
