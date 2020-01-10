@@ -10,12 +10,12 @@ let names = JSON.parse(fs.readFileSync('names.json'));
 let addresses = fs.readFileSync('addresses.txt').toString().split("\r\n");
 let restaurants = fs.readFileSync('restaurants.txt').toString().split("\n");
 let utilitiesList = JSON.parse(fs.readFileSync('utilitycompanies.json')).companies;
+let squareFootageList = fs.readFileSync('../scripts/squarefooting.txt').toString().split("\n");
 let utilities = [];
 for (let i = 0; i < utilitiesList.length; i ++) {
     let u = utilitiesList[i];
     utilities.push(u.name);
 }
-// console.log(utilities);
 let i = 0;
 while (i < NUM_PEOPLE) {
     let person = names[i];
@@ -68,7 +68,8 @@ while (i < NUM_PEOPLE) {
         address: address,
         zipcode: ZIPCODE,
         family: family,
-        bill: bills
+        bill: bills,
+        footage: squareFootageList[i]
     }
     i++;
 }

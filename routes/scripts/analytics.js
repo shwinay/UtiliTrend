@@ -1,21 +1,23 @@
 let fs = require('fs');
 
 function analyzeUser(username) {
-    let data = JSON.parse(fs.readFileSync("../data.json"));
-    let utilitiesList = JSON.parse(fs.readFileSync('../data_generation/utilitycompanies.json')).companies;
+    console.log(__dirname);
+    let data = JSON.parse(fs.readFileSync(__dirname + "/../data.json"));
+    let utilitiesList = JSON.parse(fs.readFileSync(__dirname + '/../data_generation/utilitycompanies.json')).companies;
     let utilities = [];
-    //list of names 
+    //list of names     
     for (let i = 0; i < utilitiesList.length; i ++) {
         let u = utilitiesList[i];
         utilities.push(u.name);
     }
 
     //getting my bill
+    if (!data.hasOwnProperty(username)) return {"Error": "User not found.."};
     let myBill = data[username].bill;
     let myUtilityCost = 0;
     for (let i = 0; i < myBill.length; i ++) {
         let item = myBill[i];
-        if (utilities.includes(item.payee)) {myUtilityCost = item.amount;}
+        if (utilities.includes(item.payee)) myUtilityCost = item.amount;
     }
 
     let mySquareFootage = data[username].footage;
@@ -28,12 +30,31 @@ function analyzeUser(username) {
         if (myZip == zipcode) { //filter by location
             //filter by sq footage
             if (similarFootage(parseInt(mySquareFootage), parseInt(userdata.footage))) {
-                similarUtilPrices.push(userdata);
+                let userBill = userdata.bill;
+                for (let i = 0; i < userBill.length; i ++) {
+                    let item = userBill[i];
+                    if (utilities.includes(item.payee)) {
+                        similarUtilPrices.push(item.amount);
+                        break;
+                    }
+                }
             }
         }
     }
     
-    return similarUtilPrices;
+    //calculate avg of similar costs
+    let sum = 0;
+    for (let i = 0; i < similarUtilPrices.length; i ++) {
+        sum += parseInt(similarUtilPrices[i]);
+    }
+
+    let average = (sum / similarUtilPrices.length).toFixed(2);
+
+    return {
+        "User Cost": myUtilityCost,
+        "Similar Costs": similarUtilPrices,
+        "Average Similar Cost": average
+    };
 }
 
 function similarFootage(footageOne, footageTwo) {
@@ -43,4 +64,4 @@ function similarFootage(footageOne, footageTwo) {
     return footageTwo >= minVal && footageTwo <= maxVal;
 }
 
-console.log(analyzeUser("andrea-91@example").length);
+module.exports.analyzeUser = analyzeUser;
