@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "chart.js": "^2.9.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
@@ -14,6 +15,7 @@
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.0",
     "react": "^16.12.0",
+    "react-chartjs-2": "^2.8.0",
     "react-router-dom": "^5.1.2",
     "xml-js": "^1.6.11"
   }

@@ -8,6 +8,13 @@ class Form extends Component {
         password : "",
     }
 
+    updateSearch = (e) => {
+        e.preventDefault();
+        this.setState({
+            [e.target.name] : e.target.value
+        });
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -17,15 +24,19 @@ class Form extends Component {
                         <center>
                             <input placeholder="Username" 
                                 className="form-control input m-4"
+                                name="username"
                                 type="text" value={this.state.username}
+                                onChange={this.updateSearch}
                             />
                             <input placeholder="Password" 
-                                className="form-control input m-4"
-                                type="text" value={this.state.password}
+                                className="form-control input m-4 password"
+                                name="password"
+                                type="password" value={this.state.password}
+                                onChange={this.updateSearch}
                             />
                             <button 
                                 className="btn btn-info"
-                                
+                                onClick={() => {this.props.changePage("dashboard")}}
                             >
                                 SIGN IN
                             </button>
@@ -36,11 +47,6 @@ class Form extends Component {
         );
     }
 
-    handleCategoryChange = event => {
-        this.setState({
-            category : event.target.value
-        });
-    }
 }
 
 export default Form;

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import Jumbotron from "./components/Jumbotron"
 import Form from "./components/Form";
-// import About from "./components/About";
-// import Favorites from "./components/Favorites"
+import Dashboard from "./components/Dashboard"
 
 //entry point for project - displays the current page
 class App extends Component {
@@ -28,8 +27,16 @@ class App extends Component {
     if (this.state.page == "search") {
       return (
         <React.Fragment>
-          <Jumbotron title="Jeopardy Lookup" subtitle='What is "a website to search questions and answers from your favorite trivia show?"'/>
-          <Form />
+          <Jumbotron />
+          <Form changePage={this.changePage}/>
+        </React.Fragment>
+      )
+    }
+    else if (this.state.page == "dashboard") {
+      return (
+        <React.Fragment>
+          <Jumbotron />
+          <Dashboard />
         </React.Fragment>
       )
     }

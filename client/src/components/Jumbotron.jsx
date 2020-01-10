@@ -13,7 +13,7 @@ class Jumbotron extends Component {
                             <img src={"c1Logo.png"} alt="Capital One" width="420" height="158"></img>
                         </div>
                         <div className="col-4">
-                            <h2 className="display-4" style={{paddingTop: "0.75em"}}>Utilitrend</h2>
+                            <h2 className="display-4" style={{paddingTop: "0.75em"}}>UtiliTrend</h2>
                         </div>
                     </div>
                 </div>
