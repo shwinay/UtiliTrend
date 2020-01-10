@@ -1,0 +1,53 @@
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<body>
+    <pre id="object"></pre>
+
+</body>
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBOiBa5tGqmsbDvCCZfcUsUzhAjEbwIv64",
+    authDomain: "utilitrend.firebaseapp.com",
+    databaseURL: "https://fir-demo-6315b.firebaseio.com/",
+    projectId: "utilitrend",
+    storageBucket: "utilitrend.appspot.com",
+    messagingSenderId: "52248634509",
+    appId: "1:52248634509:web:93272abeacbd64ad756ec4"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  let customer = "aaronmccoy@example";
+  firebase.database().ref(customer).update({
+    family: 3
+  });
+
+  console.log(firebase.database().ref(customer);
+
+  firebase.database().ref().once('value').then((snapshot) => {
+    console.log(snapshot.val()[customer].family);
+  });
+
+  // console.log(firebase.database().ref(customer).once('value').then((snapshot) => {
+  //   console.log(firebase.database().ref(customer));
+  // }));
+
+  // firebase.database().ref().once('value').then((snapshot) => {
+  //   let jsonDB = snapshot.val();
+  //   Object.keys(jsonDB).forEach(key => {
+  //     console.log(jsonDB[key]);
+  //   });
+  // })
+  // var database = firebase.database();
+  
+  // const preObject = document.getElementById('object');
+
+  // const dbRefObject = firebase.database().ref().child('object');
+
+  // dbRefObject.on('value', snap => console.log(snap.val()));
+  
+</script>
