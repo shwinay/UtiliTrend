@@ -5,6 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import './App.css';
 import Login from './Components/Login'
 // import Info from './Components/Info'
+//1280x461
+//160x58
 
 function App() {
   return (    
@@ -13,7 +15,7 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <AppBar position='static' color="#fafafa">
         <Toolbar>
-          <img src="../public/c1Logo.png" alt="Capital One"></img>
+          <img src={"./c1Logo.png"} width='160' height='58' alt="Capital One" />
           
         </Toolbar>
       </AppBar>
