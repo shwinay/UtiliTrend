@@ -16,13 +16,14 @@ for (let i = 0; i < utilitiesList.length; i ++) {
     utilities.push(u.name);
 }
 // console.log(utilities);
-
+let i = 0;
 while (i < NUM_PEOPLE) {
     let person = names[i];
     let firstName = person.name;
     let lastName = person.surname;
     let email = person.email;
     if (email.split(".").length > 2) { // deleting if containing more than 1 "."
+        i++;
         continue;
     }
     email = email.split(".")[0] // remove .com
@@ -59,12 +60,14 @@ while (i < NUM_PEOPLE) {
         amount: utilAmount,
         date: newdate
     })
+    let family = 0;
     data[email] = {
         name: firstName + " " + lastName,
         email: email,
         password: password,
         address: address,
         zipcode: ZIPCODE,
+        family: family,
         bill: bills
     }
     i++;
