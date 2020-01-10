@@ -48,16 +48,6 @@ async function analyzeUser(username) {
             let userdata = data[user];
             let zipcode = userdata.zipcode;
             if (myZip == zipcode) { //filter by location
-                //filter by sq footage
-                // let promise = new Promise(function(resolve, reject) {
-                    
-                // })
-                // try {
-                //     await similarFamily(userdata.email, username);
-                // } catch (err) {
-                //     console.log("error");
-                // }
-                // console.log(similarUtilPrices.length);
                 if (similarFootage(parseInt(mySquareFootage), parseInt(userdata.footage), percentage)) {
                     // console.log(similarUtilPrices.length);
                     let userBill = userdata.bill;
@@ -114,5 +104,5 @@ async function similarFamily(customerOne, customerTwo) {
 
 module.exports.analyzeUser = analyzeUser;
 
-// console.log(analyzeUser("andrea-91@example"));
-analyzeUser("andrea-91@example");
+console.log(analyzeUser("andrea-91@example"));
+// analyzeUser("andrea-91@example");

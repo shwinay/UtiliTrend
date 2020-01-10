@@ -23,10 +23,10 @@
 
   let customer = "aaronmccoy@example";
   firebase.database().ref(customer).update({
-    family: 3
+    family: 5
   });
 
-  console.log(firebase.database().ref(customer);
+  console.log(firebase.database().ref(customer));
 
   firebase.database().ref().once('value').then((snapshot) => {
     console.log(snapshot.val()[customer].family);
