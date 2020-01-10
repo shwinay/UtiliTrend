@@ -13,7 +13,8 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <AppBar position='static' color="#fafafa">
         <Toolbar>
-          <svg src="../public/capital-one-logo.svg" />
+          <img src="../public/c1Logo.png" alt="Capital One"></img>
+          
         </Toolbar>
       </AppBar>
       <Login />
