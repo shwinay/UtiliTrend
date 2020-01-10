@@ -1,47 +1,46 @@
 let fs = require('fs');
-let houseDataFetch = require('./housingData');
 
 function analyzeUser(username) {
-    let data = JSON.parse(fs.readFileSync("data.json"));
-    let utilitiesList = JSON.parse(fs.readFileSync('utilitycompanies.json')).companies;
+    let data = JSON.parse(fs.readFileSync("../data.json"));
+    let utilitiesList = JSON.parse(fs.readFileSync('../data_generation/utilitycompanies.json')).companies;
     let utilities = [];
     //list of names 
     for (let i = 0; i < utilitiesList.length; i ++) {
         let u = utilitiesList[i];
         utilities.push(u.name);
     }
-    
+
     //getting my bill
-    let bill = data.username.bill;
+    let myBill = data[username].bill;
     let myUtilityCost = 0;
-    for (let item in bill) {
-        if (utilities.includes(item.payee)) myUtilityCost = item.amount;
+    for (let i = 0; i < myBill.length; i ++) {
+        let item = myBill[i];
+        if (utilities.includes(item.payee)) {myUtilityCost = item.amount;}
     }
 
-    let myZip = data.username.zipcode;
-    houseDataFetch.getData(data.username.address.replace(' ', '+'), parseInt(myZip))
-        .then(response => {
-            let mySqFt = response.residenceSize;
-            let minFilter = 1;
-            let maxFilter = 1;
-            while (filteredUsers.length < 30) {
-                minFilter -= .1
-                maxFilter += .1
-                for (let user in data) {
-                    //filter by zipcode
-                    if (user.zipcode == myZip) {
-                        //get square footage
-                        let userAddr = user.address.replace(' ', '+');
-                        let userSqFt = houseDataFetch(userAddr, myZip).residenceSize;
-                        //tolerance 10%, increasing by 10% if 30 users are not found
-                        if (userSqFt > (minFilter * mySqFt) && userSqFt < (maxFilter * mySqFt) && !filteredUsers.includes(user)) {
-                            filteredUsers.push(user);
-                        }
-        
-                    }
-                }
+    let mySquareFootage = data[username].footage;
+    let similarUtilPrices = [];
+    let myZip = data[username].zipcode;
+
+    for (let user in data) {
+        let userdata = data[user];
+        let zipcode = userdata.zipcode;
+        if (myZip == zipcode) { //filter by location
+            //filter by sq footage
+            if (similarFootage(parseInt(mySquareFootage), parseInt(userdata.footage))) {
+                similarUtilPrices.push(userdata);
             }
-        })
+        }
+    }
     
-    let filteredUsers = [];
+    return similarUtilPrices;
 }
+
+function similarFootage(footageOne, footageTwo) {
+    let percentage = 0.05;
+    let maxVal = footageOne + footageOne * percentage;
+    let minVal = footageOne - footageOne * percentage;
+    return footageTwo >= minVal && footageTwo <= maxVal;
+}
+
+console.log(analyzeUser("andrea-91@example").length);
