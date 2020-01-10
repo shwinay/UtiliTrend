@@ -4,31 +4,31 @@ import React, { Component } from "react"
 class Form extends Component {
 
     state = {
-        category : "",
-        difficulty: "all",
-        startDate: new Date(1990, 1, 1),
-        endDate: new Date()
+        username : "",
+        password : "",
     }
 
     render() {
         return (
             <React.Fragment>
-                <div className="container" style={{maxWidth : "600px"}}>
+                <div className="container" style={{maxWidth : "400px"}}>
+                    <center><h3 className="display-4">Sign In</h3></center>
                     <form onSubmit={event => {event.preventDefault()}}>
                         <center>
-                            <input placeholder="Enter Question Category" 
+                            <input placeholder="Username" 
                                 className="form-control input m-4"
-                                type="text" value={this.state.category}
-                                size="25" onChange={this.handleCategoryChange}
+                                type="text" value={this.state.username}
                             />
-                            <select className="form-control m-4" onChange={event => 
-                            this.setState({
-                                    difficulty: (event.target.value == "All Difficulties" ? "all" : event.target.value)
-                                })}
+                            <input placeholder="Password" 
+                                className="form-control input m-4"
+                                type="text" value={this.state.password}
+                            />
+                            <button 
+                                className="btn btn-info"
+                                
                             >
-                                <option>All Difficulties</option>
-                                {this.getDifficultyOptions()}
-                            </select>
+                                SIGN IN
+                            </button>
                         </center>
                     </form>
                 </div>
@@ -40,15 +40,6 @@ class Form extends Component {
         this.setState({
             category : event.target.value
         });
-    }
-
-    getDifficultyOptions() {
-        let difficulties = [200, 400, 600, 800, 1000, 1200, 1600, 2000];
-        let options = [];
-        for (let i = 0; i < difficulties.length; i ++) {
-            options.push(<option>{difficulties[i]}</option>)
-        };
-        return options;
     }
 }
 

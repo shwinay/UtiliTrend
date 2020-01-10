@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Jumbotron from "./components/Jumbotron"
 import Form from "./components/Form";
-import Navbar from "./components/Navbar";
 // import About from "./components/About";
 // import Favorites from "./components/Favorites"
 
@@ -15,7 +14,6 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Navbar changePage={this.changePage}/>
         {this.getPage()}
       </React.Fragment>
     )
