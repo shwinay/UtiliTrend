@@ -14,5 +14,4 @@ router.get('/user/:username', function(req, res, next) {
   let username = req.params.username;
   res.json(analytics.analyzeUser(username));
 });
-
 module.exports = router;

@@ -51,9 +51,9 @@ function analyzeUser(username) {
     let average = (sum / similarUtilPrices.length).toFixed(2);
 
     return {
-        "User Cost": myUtilityCost,
-        "Similar Costs": similarUtilPrices,
-        "Average Similar Cost": average
+        "User_Cost": myUtilityCost,
+        "Similar_Costs": similarUtilPrices,
+        "Average_Similar_Cost": average
     };
 }
 
