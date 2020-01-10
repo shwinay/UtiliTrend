@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import Card from "./Card"
+import { Bar } from "react-chartjs-2"
 
 const getCost = (dataset) => {
   var set = [];
