@@ -1,29 +1,31 @@
-import React from "react";
-// import { Doughnut } from 'react-chartjs-2';
+import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
-import { dummyData } from "./dummyData";
 
-const getCost = dataset => {
+const getCost = (dataset) => {
   var set = [];
   for (var i = 0; i < dataset.length; i++) {
-    set.push(dataset[i].avgCost);
+    set.push(dataset[i]);
   }
   return set.sort(function(x, y) {
     return x - y;
   });
 };
 
-const getRange = (axis, intervalCount) => {
+const getRange = (axis_t, intervalCount) => {
+  var axis = [];
+  for (var i = 0; i < axis_t.length; i++) {
+    axis.push(parseFloat(axis_t[i]));
+  }
   var set = [];
-  //var res = [lo,hi]
   var min = axis[0];
   var max = axis[axis.length - 1];
   var step = parseFloat(((max - min) / intervalCount).toFixed(2));
   var lo = parseFloat(min.toFixed(2));
   for (var i = 0; i < intervalCount; i++) {
-    var tuple = [lo, lo + step];
+    var rounded = parseFloat((lo + step).toFixed(2))
+    var tuple = [lo, rounded];
     set.push(tuple);
-    lo = lo + step;
+    lo = rounded;
   }
   set[set.length - 1][1] = axis[axis.length - 1];
   return set;
@@ -32,7 +34,7 @@ const getRange = (axis, intervalCount) => {
 function findNumPeopleInRange(data, min, max) {
   var total = 0;
   for (var i = 0; i < data.length; i++) {
-    if (data[i].avgCost >= min && data[i].avgCost <= max) {
+    if (data[i] >= min && data[i] <= max) {
       total++;
     }
   }
@@ -75,76 +77,104 @@ const getColors = (yourIndex, intervalCount, defaultColor, newColor) => {
   return colorArray;
 };
 
-const userMoney = 15.32;
 const blueLight = "rgba(51, 153, 255, 0.2)";
 const blueDark = "rgba(51, 153, 255, 0.4)";
 const redLight = "rgba(255,99,132,0.3)";
 const redDark = "rgba(255,99,132,0.6)";
 
-const data = {
-  labels: rangeArrayToStringArray(getRange(getCost(dummyData), 7)),
-  datasets: [
-    {
-      label: "People in Interval",
-      backgroundColor: getColors(
-        getIndividualIndex(getRange(getCost(dummyData), 7), userMoney),
-        7,
-        blueLight,
-        redLight
-      ),
-      borderColor: getColors(
-        getIndividualIndex(getRange(getCost(dummyData), 7), userMoney),
-        7,
-        "rgba(51, 153, 255, 0.8)",
-        "rgba(255, 99, 132, 0.8)"
-      ),
-      hoverBackgroundColor: getColors(
-        getIndividualIndex(getRange(getCost(dummyData), 7), userMoney),
-        7,
-        blueDark,
-        redDark
-      ),
-      borderWidth: 1,
-      hoverBorderColor: getColors(
-        getIndividualIndex(getRange(getCost(dummyData), 7), userMoney),
-        7,
-        "rgba(51, 153, 255, 1)",
-        "rgba(255, 99, 132, 1)"
-      ),
-      data: getNumPeople(dummyData, getRange(getCost(dummyData), 7))
-    }
-  ]
-};
+class App extends Component {
 
-const App = () => {
-  return {
-    displayName: "Util_Distribution",
+  state = {
+    data: {},
+    formattedData: {},
+    userMoney: 0
+  };
+
+  componentDidMount() {
+    this.getData("frank86@example");
+  }
+
+  getData = (username) => {
+    fetch("/user/" + username)
+    .then(res => res.json())
+    .then(parsedJSON => {this.setState({
+      data: parsedJSON 
+    }, () => {
+      this.setState({userMoney: parseFloat(this.state.data.User_Cost)}, () => {
+        this.formatData();
+      })
+    });
+   })
+  }
+
+  formatData = () => {
+    console.log(this.state.data.User_Cost)
+    let formatted = {
+    labels: rangeArrayToStringArray(getRange(getCost(this.state.data.Similar_Costs), 7)),
+    datasets: [
+      {
+        label: "Bills of Similar People Based on Location and Square Footage",
+        backgroundColor: getColors(
+          getIndividualIndex(getRange(getCost(this.state.data.Similar_Costs), 7), this.state.userMoney),
+          7,
+          blueLight,
+          redLight
+        ),
+        borderColor: getColors(
+          getIndividualIndex(getRange(getCost(this.state.data.Similar_Costs), 7), this.state.userMoney),
+          7,
+          "rgba(51, 153, 255, 0.8)",
+          "rgba(255, 99, 132, 0.8)"
+        ),
+        hoverBackgroundColor: getColors(
+          getIndividualIndex(getRange(getCost(this.state.data.Similar_Costs), 7), this.state.userMoney),
+          7,
+          blueDark,
+          redDark
+        ),
+        borderWidth: 1,
+        hoverBorderColor: getColors(
+          getIndividualIndex(getRange(getCost(this.state.data.Similar_Costs), 7), this.state.userMoney),
+          7,
+          "rgba(51, 153, 255, 1)",
+          "rgba(255, 99, 132, 1)"
+        ),
+        data: getNumPeople(this.state.data.Similar_Costs, getRange(getCost(this.state.data.Similar_Costs), 7))
+      }
+    ]
+    };
+    this.setState({formattedData: formatted})
+  }
 
     render() {
       return (
         <div>
-          <h2>How You Match Up to Spenders in Your Area</h2>
+          <div class="container">
+          <h2>Utility Bills in Your Area</h2>
           <Bar
-            data={data}
+            data={this.state.formattedData}
             width={100}
             height={300}
             options={{
               maintainAspectRatio: false,
-              scales: {
-                yAxes: [
-                  {
-                    ticks: {
-                      beginAtZero: true
-                    }
+              scales : {
+                yAxes: [{
+                  ticks : {
+                    beginAtZero: true
                   }
-                ]
+                }]
+              },
+              legend: {
+                labels: {
+                  onHover: function(){}
+                }
               }
             }}
           />
+          </div>
         </div>
       );
     }
-  };
-};
+}
 
 export default App;
