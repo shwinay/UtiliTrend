@@ -6,6 +6,9 @@ let analytics = require('./scripts/analytics');
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get('/Info', function(req, res, next) {
+  res.render('Info', { title: 'Utility Analytics' });
+});
 
 router.get('/user/:username', function(req, res, next) {
   let username = req.params.username;
