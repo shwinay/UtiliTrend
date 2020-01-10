@@ -7,7 +7,8 @@ import Dashboard from "./components/Dashboard"
 class App extends Component {
   
   state= {
-    page: "search"
+    page: "search",
+    username: ""
   };
 
   render() {
@@ -18,8 +19,8 @@ class App extends Component {
     )
   }
 
-  changePage = (page) => { //page is either search, favorites, or about
-    this.setState({page: page});
+  changePage = (page, username) => { //page is either search, favorites, or about
+    this.setState({page: page, username: username});
   }
 
   //gets the current page contents based on last clicked navbar item
@@ -36,26 +37,10 @@ class App extends Component {
       return (
         <React.Fragment>
           <Jumbotron />
-          <Dashboard />
+          <Dashboard username={this.state.username}/>
         </React.Fragment>
       )
     }
-    // else if (this.state.page == "favorites") {
-    //   return (
-    //     <React.Fragment>
-    //       <Jumbotron title="My Favorites" subtitle='What are "your favorite trivia questions and answers?"'/>
-    //       <Favorites />
-    //     </React.Fragment>
-    //   )
-    // }
-    // else if (this.state.page == "about") {
-    //   return (
-    //     <React.Fragment>
-    //       <Jumbotron title="About" subtitle="Information about Jeopardy Lookup!"/>
-    //       <About />
-    //     </React.Fragment>
-    //   )
-    // }
   }
 
 }

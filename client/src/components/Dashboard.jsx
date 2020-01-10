@@ -1,13 +1,10 @@
 import React, { Component } from "react"
 
 class Dashboard extends Component {
-    state = {
-
-    }
 
     render() {
         return (
-            <p>Fuck you Vraj</p>
+            <p>Fuck you {this.props.username}</p>
         )
     }
 }

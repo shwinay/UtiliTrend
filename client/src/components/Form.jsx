@@ -36,7 +36,7 @@ class Form extends Component {
                             />
                             <button 
                                 className="btn btn-info"
-                                onClick={() => {this.props.changePage("dashboard")}}
+                                onClick={() => {this.props.changePage("dashboard", this.state.username)}}
                             >
                                 SIGN IN
                             </button>
