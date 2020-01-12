@@ -1,6 +1,26 @@
 import React, { Component } from "react"
-import Card from "./Card"
-import { Bar } from "react-chartjs-2"
+import { Bar } from "react-chartjs-2";
+import updateFamilySize from "../App.js"
+import Transaction from "./Transaction"
+
+var firebase = require("firebase/app");
+var firebase = require('firebase/app');
+require('firebase/auth');
+require('firebase/database');
+
+var firebaseConfig = {
+  apiKey: "AIzaSyBOiBa5tGqmsbDvCCZfcUsUzhAjEbwIv64",
+  authDomain: "utilitrend.firebaseapp.com",
+  databaseURL: "https://fir-demo-6315b.firebaseio.com/",
+  projectId: "utilitrend",
+  storageBucket: "utilitrend.appspot.com",
+  messagingSenderId: "52248634509",
+  appId: "1:52248634509:web:93272abeacbd64ad756ec4"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+
 
 const getCost = (dataset) => {
   var set = [];
@@ -88,10 +108,22 @@ class Dashboard extends Component {
     formattedData: {},
     userMoney: 0,
     filterToggle: false,
-    householdSize: 1
+    householdSize: 1,
+    transactions: {}
   };
   componentDidMount() {
     this.getData(this.props.username);
+    this.getTransactions(this.props.username);
+  }
+  getTransactions = (username) => {
+    console.log(username);
+    fetch("/transactions/" + username)
+      .then(res => res.json())
+      .then(parsedJSON => {
+        this.setState({
+          transactions: parsedJSON
+        });
+      })
   }
   getData = (username) => {
     fetch("/user/" + username)
@@ -146,6 +178,7 @@ class Dashboard extends Component {
   }
     render() {
       return (
+        <React.Fragment>
         <div>
           <div class="container">
           <center>
@@ -190,7 +223,30 @@ class Dashboard extends Component {
           <br />
         <br />
         </div>
+        <div>
+        <div class="container">
+          {this.pushTransactions()}
+        </div>
+        <br />
+      </div>
+      </React.Fragment>
       );
+    }
+
+    pushTransactions() {
+      let transList = [];
+      for (let i = 0; i < this.state.transactions.length; i ++) {
+        let transaction = this.state.transactions[i];
+        //console.log(typeof transaction);
+        transList.push(<Transaction description={transaction["payee"]} amount={transaction.amount} />);
+      }
+      return transList;
+    }
+
+    handleClick = () => {
+      firebase.database().ref(this.props.username).update({
+        family: document.getElementById("familyButton").value
+      });
     }
 
     getFilterToggle() {
@@ -202,6 +258,7 @@ class Dashboard extends Component {
             <div class="container">
               <input placeholder="Household Size" 
                   className="form-control input m-4"
+                  id="familyButton"
                   name="householdinput"
                   type="text" value={this.state.householdSize}
                   onChange={(event) => this.setState({householdSize: event.target.value})}
@@ -209,7 +266,7 @@ class Dashboard extends Component {
               />
             </div>
           </div>
-          <button className="btn btn-primary">Submit</button>
+          <button onClick={this.handleClick} className="btn btn-primary">Submit</button>
         </React.Fragment>
         </center>
       )

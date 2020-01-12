@@ -14,5 +14,9 @@ router.get('/user/:username', function(req, res, next) {
   let username = req.params.username;
   res.json(analytics.analyzeUser(username));
 });
-
+router.get('/transactions/:username', function(req, res, next) {
+  let username = req.params.username;
+  console.log(username);
+  res.json(analytics.getBill(username));
+})
 module.exports = router;

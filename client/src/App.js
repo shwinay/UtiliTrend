@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Jumbotron from "./components/Jumbotron"
-import Form from "./components/Form"
+import Form from "./components/Form";
 import Dashboard from "./components/Dashboard"
 
 //entry point for project - displays the current page
