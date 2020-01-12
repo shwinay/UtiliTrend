@@ -17,7 +17,7 @@ checking accounts, with a specific focus on their utilities spending. This takes
 
 
 ### Showcase
-User login and display
+##### User login and display
 [![Image from Gyazo](https://i.gyazo.com/af5c49148eef0b9a6aee9ab6aa715cf3.gif)](https://gyazo.com/af5c49148eef0b9a6aee9ab6aa715cf3)
-Automatic data storage with Firebase
+##### Automatic data storage with Firebase
 [![Image from Gyazo](https://i.gyazo.com/a4faedd40b68c3f9c77c4a17b2dd3918.gif)](https://gyazo.com/a4faedd40b68c3f9c77c4a17b2dd3918)
