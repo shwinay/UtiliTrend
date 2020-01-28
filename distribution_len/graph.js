@@ -85,7 +85,7 @@ const App = () => {
             data={data}
             width={100}
             height={300}
-            options={{
+            options={{ 
               maintainAspectRatio: false
             }}
           />
